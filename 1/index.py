@@ -20,7 +20,7 @@ for line in text:
     instructions.append((split_line[0], split_line[1], split_line[2][1:-1]))
 
 for instruction in instructions:
-    pass    
+    pass
 
 # Part 2
 print('================================ PT2')

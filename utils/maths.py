@@ -1,6 +1,14 @@
-import math as maths
+import math as maths # I'll fight any american in a car park
+
+from typing import List
+
 
 def most_common_item(arr: list):
+    '''
+    For a given array of items, finds the item which occurs the more frequently.
+
+    returns [any, int]: A tuple of the item and its count.
+    '''
     count = {}
     top_item = [arr[0], 1]
     highest_value = arr[0]
@@ -58,3 +66,6 @@ def lowest_common_multiple(*numbers):
     for factor in factor_list:
         total *= factor
     return total
+
+def quicksort(items: List[any]):
+    return
