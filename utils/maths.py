@@ -1,14 +1,14 @@
-import math as maths # I'll fight any american in a car park
+import math as maths  # I'll fight any american in a car park
 
 from typing import List
 
 
 def most_common_item(arr: list):
-    '''
+    """
     For a given array of items, finds the item which occurs the more frequently.
 
     returns [any, int]: A tuple of the item and its count.
-    '''
+    """
     count = {}
     top_item = [arr[0], 1]
     highest_value = arr[0]
@@ -28,11 +28,11 @@ def most_common_item(arr: list):
 
 
 def prime_factors(number: int):
-    '''
+    """
     Generic implementation of a function to find prime factors of a given number.
 
     Copied from example at https://www.geeksforgeeks.org/prime-factor/
-    '''
+    """
     factors = []
 
     # If number is divisible by 2, find the number of times 2 can be factored in.
@@ -48,7 +48,7 @@ def prime_factors(number: int):
             factors.append(i)
             number = number / i
 
-    # Anything remaining is added as the last multiple. 
+    # Anything remaining is added as the last multiple.
     if number > 2:
         factors.append(int(number))
 
@@ -68,31 +68,31 @@ def lowest_common_multiple(*numbers):
     return total
 
 
-def quicksort(items: List[int], start = None, end = None):
-	if start is None:
-		start = 0
+def quicksort(items: List[int], start=None, end=None):
+    if start is None:
+        start = 0
 
-	if end is None:
-		end = len(items) - 1
+    if end is None:
+        end = len(items) - 1
 
-	def partition(start, end):
-		pivot_value = items[end]
-		index = start - 1
+    def partition(start, end):
+        pivot_value = items[end]
+        index = start - 1
 
-		for j in range(start, end):
-			if items[j] <= pivot_value:
-				index += 1
-				items[index], items[j] = items[j], items[index]
+        for j in range(start, end):
+            if items[j] <= pivot_value:
+                index += 1
+                items[index], items[j] = items[j], items[index]
 
-		index += 1
-		items[index], items[end] = items[end], items[index]
-		return index
+        index += 1
+        items[index], items[end] = items[end], items[index]
+        return index
 
-	if start >= end:
-		return
-	
-	pivot = partition(start, end)
-	quicksort(items, start, pivot - 1)
-	quicksort(items, pivot + 1, end)
+    if start >= end:
+        return
 
-	return items
+    pivot = partition(start, end)
+    quicksort(items, start, pivot - 1)
+    quicksort(items, pivot + 1, end)
+
+    return items
