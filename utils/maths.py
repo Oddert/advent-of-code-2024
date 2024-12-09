@@ -67,5 +67,32 @@ def lowest_common_multiple(*numbers):
         total *= factor
     return total
 
-def quicksort(items: List[any]):
-    return
+
+def quicksort(items: List[int], start = None, end = None):
+	if start is None:
+		start = 0
+
+	if end is None:
+		end = len(items) - 1
+
+	def partition(start, end):
+		pivot_value = items[end]
+		index = start - 1
+
+		for j in range(start, end):
+			if items[j] <= pivot_value:
+				index += 1
+				items[index], items[j] = items[j], items[index]
+
+		index += 1
+		items[index], items[end] = items[end], items[index]
+		return index
+
+	if start >= end:
+		return
+	
+	pivot = partition(start, end)
+	quicksort(items, start, pivot - 1)
+	quicksort(items, pivot + 1, end)
+
+	return items
