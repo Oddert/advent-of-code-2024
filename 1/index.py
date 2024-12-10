@@ -35,21 +35,23 @@ for i in range(len(left_list)):
 print('================================ PT2')
 pt2_value = 0
 
+
 def accumulate_frequencies(items: List[int]):
-	acc = {}
-	for item in items:
-		if item not in acc:
-			acc[item] = 0
-		acc[item] += 1
-	return acc
+    acc = {}
+    for item in items:
+        if item not in acc:
+            acc[item] = 0
+        acc[item] += 1
+    return acc
+
 
 freq_right = accumulate_frequencies(right_list)
 
 for item in left_list:
-	if item in freq_right:
-		freq = freq_right[item]
-		similarity = freq * item
-		pt2_value += similarity
+    if item in freq_right:
+        freq = freq_right[item]
+        similarity = freq * item
+        pt2_value += similarity
 
 print('Part 1 Total: ', pt1_value)
 print('Part 2 Total: ', pt2_value)
