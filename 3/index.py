@@ -40,7 +40,7 @@ for m in all_matches:
     if re.match("don't()", m):
         active = False
         continue
-    elif re.match("do()", m):
+    elif re.match('do()', m):
         active = True
         continue
     else:
