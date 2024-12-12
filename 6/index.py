@@ -88,6 +88,23 @@ print('================================ PT2')
 pt2_value = 0
 
 
+def wall_or_box(coords):
+    """
+    For a given set of coordinates, returns a code representing the cell as a wall, box, or empty.
+
+    key:
+    0: Out of bounds (wall)
+    1: No obstruction
+    2: Objstruction
+    """
+    if oob(coords):
+        return 0
+    next_cell = board[coords[0]][coords[1]]
+    if next_cell == '#':
+        return 2
+    return 1
+
+
 def pt2(start_position: Tuple[int, int]):
     curr_pos = start_position
     finished = False
@@ -129,66 +146,69 @@ def pt2(start_position: Tuple[int, int]):
     #             if next_cell:
     #                 possibles.append(next_cell)
 
-    def wall_or_box(coords):
-        """
-        For a given set of coordinates, returns a code representing the cell as a wall, box, or empty.
-
-        key:
-        0: Out of bounds (wall)
-        1: No obstruction
-        2: Objstruction
-        """
-        if oob(coords):
-            return 0
-        next_cell = board[coords[0]][coords[1]]
-        if next_cell == '#':
-            return 2
-        return 1
-
     possibles = []
-    for idx, step in enumerate(steps):
+    for step in steps:
         rh_direction = (step[2] + 1) % 4
         rh_cell_coords = increment(step, rh_direction)
-        # rh_cell_encoded = encode(rh_cell_coords)
-
         right_hand_cell_type = wall_or_box(rh_cell_coords)
-        # print(f'rhs of: {step} is: {rh_cell_coords}, with type: {right_hand_cell_type}')
 
         while right_hand_cell_type == 1:
             rh_cell_coords = increment(rh_cell_coords, rh_direction)
             right_hand_cell_type = wall_or_box(rh_cell_coords)
 
         if right_hand_cell_type == 2:
-            # print(c, step, right_hand_cell_type)
-            possibles.append(step)
+            obstacle = increment(step, step[2])
+            if not oob(obstacle):
+                possibles.append(obstacle)
 
-    # for step in possibles:
-    #     finished = False
-    #     loop = False
-    #     while not finished:
-    #         next_coords = increment(curr_pos, direction)
-    #         if oob(next_coords):
-    #             finished = True
-    #         else:
-    #             if board_pt2[next_coords[0]][next_coords[1]] == '#':
-    #                 direction = (direction + 1) % 4
-    #             else:
-    #                 encoded = encode(next_coords)
-    #                 if encoded in visited_pt2:
-    #                     visited_pt2[encoded] = [*visited_pt2[encoded], direction]
-    #                 else:
-    #                     visited_pt2[encoded] = [direction]
-    #                 curr_pos = next_coords
-    #                 # steps.append(next_coords)
-    #                 steps.append((*next_coords, direction))
+    # print(possibles)
+    # print(len(possibles))
 
-    # for row in board_pt2:
-    #     print(row)
-    # print(visited_pt2)
-    # print(steps)
-    print(possibles)
-    print(len(possibles))
-    return len(visited_pt2)
+    confirmed_loops = []
+
+    for obstacle in possibles:
+        # print(f'---------- trying obstacle {obstacle}')
+        temp_board = []
+        temp_curr_pos = start_position
+        temp_direction = 0
+        temp_steps = [(*temp_curr_pos, temp_direction)]
+        visited_temp = {f'{start_position[0]}-{start_position[1]}': [temp_direction]}
+
+        for line in text:
+            # print(line)
+            row = re.findall('.', line)
+            temp_board.append(row)
+
+        temp_board[obstacle[0]][obstacle[1]] = '#'
+        # print('===')
+
+        # for l in temp_board:
+        # print(''.join(l))
+
+        finished = False
+        loop = False
+        while not finished:
+            next_coords = increment(temp_curr_pos, temp_direction)
+            if oob(next_coords):
+                # print(f'...finishing oob at {next_coords}')
+                finished = True
+            else:
+                encoded = f'{encode(next_coords)}-{temp_direction}'
+                if encoded in visited_temp:
+                    # print('...finishing loop')
+                    loop = True
+                    finished = True
+                if temp_board[next_coords[0]][next_coords[1]] == '#':
+                    temp_direction = (temp_direction + 1) % 4
+                else:
+                    visited_temp[encoded] = True
+                    temp_curr_pos = next_coords
+                    temp_steps.append((*next_coords, temp_direction))
+        if loop:
+            confirmed_loops.append(obstacle)
+
+    # print(confirmed_loops)
+    return len(confirmed_loops)
 
 
 pt2_value = pt2(start_pos)
