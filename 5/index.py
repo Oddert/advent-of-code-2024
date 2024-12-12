@@ -36,6 +36,7 @@ for line in text:
     else:
         pages.append(line)
 
+
 def pt1():
     value = 0
     middle_nums = []
@@ -57,11 +58,13 @@ def pt1():
         value += int(num)
     return value
 
+
 pt1_value = pt1()
 
 # Part 2
 print('================================ PT2')
 pt2_value = 0
+
 
 def pt2():
     value = 0
@@ -83,7 +86,7 @@ def pt2():
                         fail_source_int = num
                         fail_target_int = seen_val
             seen[num] = idx
-    
+
         if valid:
             print('valid: ', nums)
             if depth >= 1:
@@ -94,19 +97,22 @@ def pt2():
                 target_idx = seen[fail_target_int]
                 source_idx = seen[fail_source_int]
                 if target_idx >= 0:
-                    nums[target_idx], nums[source_idx] = nums[source_idx], nums[target_idx]
+                    nums[target_idx], nums[source_idx] = (
+                        nums[source_idx],
+                        nums[target_idx],
+                    )
                     process_page(nums, depth + 1)
                 else:
                     print('unrecoverable')
-            
-    
+
     for page in pages:
-        process_page(nums = page.split(','))
+        process_page(nums=page.split(','))
 
     print(middle_nums)
     for num in middle_nums:
         value += int(num)
     return value
+
 
 pt2_value = pt2()
 
