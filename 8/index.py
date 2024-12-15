@@ -20,6 +20,7 @@ text = read_input('./8/input.txt')
 # Part 1
 pt1_value = 0
 
+
 def oob(board: List[List[int]], coords: Tuple[int, int]):
     width = len(board[0]) - 1
     height = len(board) - 1
@@ -27,7 +28,8 @@ def oob(board: List[List[int]], coords: Tuple[int, int]):
         return True
     return False
 
-def pt1 ():
+
+def pt1():
     points = {}
     pairs = {}
     anti_nodes = {}
@@ -70,6 +72,8 @@ def pt1 ():
 
     print(anti_nodes)
     return len(anti_nodes)
+
+
 pt1_value = pt1()
 
 # Part 2
@@ -77,7 +81,7 @@ print('================================ PT2')
 pt2_value = 0
 
 
-def pt2 ():
+def pt2():
     points = {}
     pairs = {}
     anti_nodes = {}
@@ -129,6 +133,8 @@ def pt2 ():
 
     print(anti_nodes)
     return len(anti_nodes)
+
+
 pt2_value = pt2()
 
 print('Part 1 Total: ', pt1_value)
